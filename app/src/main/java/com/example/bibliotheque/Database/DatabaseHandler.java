@@ -15,37 +15,73 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String sql = "";
         sql =
             "CREATE TABLE status " +
-                "( Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "Name TEXT) ; ";
+                "( " +
+                    "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "Name TEXT" +
+                ") ; ";
 
         sql +=
             " CREATE TABLE users " +
-            "( Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            "Lastname TEXT, "+
-            "Firstname TEXT, "+
-            "Email TEXT, "+
-            "Password TEXT, "+
-            "StatusId INTEGER, " +
-            "FOREIGN KEY (StatusId) REFERENCES status(Id) ) ; ";
+                "( " +
+                    "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "Lastname TEXT, "+
+                    "Firstname TEXT, "+
+                    "Email TEXT, "+
+                    "Password TEXT, "+
+                    "StatusId INTEGER, " +
+                    "FOREIGN KEY (StatusId) REFERENCES status(Id) " +
+                ") ; ";
 
 
         sql +=
             " CREATE TABLE books " +
-                "( Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "Name TEXT, "+
-                "ISBN TEXT, "+
-                "Author TEXT) ; ";
+                "( " +
+                    "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "Name TEXT, "+
+                    "ISBN TEXT, "+
+                    "Author TEXT" +
+                ") ; ";
 
         sql +=
             " CREATE TABLE loan " +
-                "( Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "UserId INTEGER, "+
-                "BookId INTEGER, "+
-                "BorrowingDate  TEXT, " +
-                "RenderDate TEXT, " +
-                "FOREIGN KEY (UserId) REFERENCES users(Id)" +
-                "FOREIGN KEY (BookId) REFERENCES book(Id) ) ; ";
+                "( " +
+                    "Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    "UserId INTEGER, "+
+                    "BookId INTEGER, "+
+                    "BorrowingDate  TEXT, " +
+                    "RenderDate TEXT, " +
+                    "FOREIGN KEY (UserId) REFERENCES users(Id)" +
+                    "FOREIGN KEY (BookId) REFERENCES book(Id) " +
+                ") ; ";
 
+        sql +=
+            "INSERT INTO status" +
+                "(" +
+                    "Name" +
+                ")" +
+                "VALUES" +
+                    "('Administratuer')," +
+                    "('Professionnel')," +
+                    "('Apprenti')," +
+                    "('Etudiant')";
+
+        sql +=
+            "INSERT INTO users" +
+                "(" +
+                    "Lastname" +
+                    "Firstname" +
+                    "Email" +
+                    "Password" +
+                    "StatusId" +
+                ")" +
+                "VALUES" +
+                "(" +
+                    "'Admin'" +
+                    "'Admin'" +
+                    "'admin@admin.fr'" +
+                    "'admin'" +
+                    "1" +
+                ")";
         db.execSQL(sql);
     }
     @Override
