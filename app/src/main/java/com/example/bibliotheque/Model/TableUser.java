@@ -2,6 +2,7 @@ package com.example.bibliotheque.Model;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.bibliotheque.Database.DatabaseHandler;
@@ -23,5 +24,37 @@ public class TableUser extends DatabaseHandler {
         boolean createSuccessFul = db.insert("users", null, values)>0;
         db.close();
         return createSuccessFul;
+    }
+
+
+    public ObjectUser findLoginAndPassword(String login, String password){
+        ObjectUser objectUser = null;
+
+        String sql = "SELECT * FROM users WHERE Email = '" + login + "' AND Password = '" + password + "'";
+
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(sql, null);
+
+        if(cursor.moveToFirst()){
+            int id = cursor.getInt(cursor.getColumnIndex("Id"));
+            String userFirstname = cursor.getString(cursor.getColumnIndex("Firstname"));
+            String userLastname = cursor.getString(cursor.getColumnIndex("Lastname"));
+            String userEmail = cursor.getString(cursor.getColumnIndex("Email"));
+            //String userPassword = cursor.getString(cursor.getColumnIndex("Password"));
+            int userStatutId = cursor.getInt(cursor.getColumnIndex("StatusId"));
+
+            objectUser = new ObjectUser();
+            objectUser.setId(id);
+            objectUser.setFirstname(userFirstname);
+            objectUser.setLastname(userLastname);
+            objectUser.setEmail(userEmail);
+            objectUser.setStatusid(userStatutId);
+        }
+        cursor.close();
+        db.close();
+
+        return objectUser;
     }
 }
