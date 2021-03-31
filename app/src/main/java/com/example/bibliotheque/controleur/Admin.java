@@ -1,4 +1,4 @@
-package com.example.bibliotheque;
+package com.example.bibliotheque.controleur;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,20 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.bibliotheque.controleur.Book_form;
-import com.example.bibliotheque.controleur.Books_list;
-import com.example.bibliotheque.controleur.Status_form;
-import com.example.bibliotheque.controleur.Status_list;
-import com.example.bibliotheque.controleur.User_form;
-import com.example.bibliotheque.controleur.Users_list;
+import com.example.bibliotheque.R;
 
-public class activity_layout_admin extends AppCompatActivity {
+public class Admin extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_layout_admin);
+        setContentView(R.layout.activity_admin);
     }
+
 
     public void layout_users(View view) {
         Intent intent = new Intent(this, Users_list.class);
@@ -52,5 +48,4 @@ public class activity_layout_admin extends AppCompatActivity {
         startActivity(intent);
 
     }
-
 }
