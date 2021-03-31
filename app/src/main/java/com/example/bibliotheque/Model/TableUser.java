@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.bibliotheque.Database.DatabaseHandler;
 import com.example.bibliotheque.Object.ObjectUser;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TableUser extends DatabaseHandler {
     public TableUser(Context context) {
         super(context);
@@ -19,11 +22,54 @@ public class TableUser extends DatabaseHandler {
         values.put("Firstname", objectUser.getFirstname());
         values.put("Email", objectUser.getEmail());
         values.put("Password", objectUser.getPassword());
-        values.put("StatusId", objectUser.getStatusid());
         SQLiteDatabase db = this.getWritableDatabase();
         boolean createSuccessFul = db.insert("users", null, values)>0;
         db.close();
         return createSuccessFul;
+    }
+
+    public int count() {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String sql = "SELECT * FROM users";
+        int recordCount = db.rawQuery(sql, null).getCount();
+        db.close();
+
+        return recordCount;
+    }
+
+    public List<ObjectUser> read() {
+        List<ObjectUser> recordsList = new ArrayList<ObjectUser>();
+        String sql = "SELECT * FROM users ORDER BY id DESC";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql,null);
+        if (cursor.moveToFirst()) {
+            do {
+                int id = Integer.parseInt(cursor.getString(cursor.getColumnIndex("Id")));
+                String userFirstname = cursor.getString(cursor.getColumnIndex("Firstname"));
+                String userLastname = cursor.getString(cursor.getColumnIndex("Lastname"));
+
+                ObjectUser objectUser = new ObjectUser();
+                objectUser.setId(id);
+                objectUser.setFirstname(userFirstname);
+                objectUser.setLastname(userLastname);
+
+                recordsList.add(objectUser);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return recordsList;
+    }
+
+    public boolean delete(int id) {
+        boolean deleteSuccessful = false;
+        SQLiteDatabase db = this.getWritableDatabase();
+        deleteSuccessful = db.delete("users", "id = '" + id + "'", null) > 0;
+        db.close();
+
+        return deleteSuccessful;
     }
 
 

@@ -16,7 +16,6 @@
         <activity android:name=".controleur.Status_list" />
         <activity android:name=".controleur.Book_form" />
         <activity android:name=".controleur.Books_list" />
-        <activity android:name=".controleur.User_form" />
         <activity android:name=".controleur.Users_list" />
         <activity android:name=".MainActivity">
             <intent-filter>
